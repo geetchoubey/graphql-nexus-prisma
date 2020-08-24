@@ -12,7 +12,7 @@ before_script:
   - npm i -g serverless nexus prisma
   - echo "DATABASE_URL=${DATABASE_URL}" > prisma/.env
 
-script: npm run build:ci
+script: npm run generate
 
 after_script:
   - docker build -t gql .
