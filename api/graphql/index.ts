@@ -7,9 +7,10 @@ import User from './User';
 import Comment from './Comment'
 import Mutation from './Mutation'
 import Query from './Query'
+import Subscription from './Subscription';
 
 export const schema = makeSchema({
-    types: [Query, Mutation, User, Post, Comment],
+    types: [Query, Mutation, User, Post, Comment, Subscription],
     plugins: [
         nexusSchemaPrisma()
     ],

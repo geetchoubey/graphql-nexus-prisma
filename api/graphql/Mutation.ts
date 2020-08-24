@@ -57,13 +57,12 @@ export default mutationType({
                     required: true
                 }),
             },
-            async resolve(parent, {authorId, postId, data}, {db}, info) {
+            async resolve(parent, {authorId, postId, data}, {db, pubSub}, info) {
                 const user = await Commons(db).userFindOne(authorId);
                 if (!user) throw new Error('User not found')
                 const post = await Commons(db).postFindOne(postId);
                 if (!post) throw new Error('Post not found')
-
-                return db.comment.create({
+                const comment = await db.comment.create({
                     data: {
                         text: data.text,
                         author: {
@@ -78,6 +77,8 @@ export default mutationType({
                         }
                     }
                 })
+                pubSub.publish(postId, comment);
+                return comment;
             }
         })
     }
