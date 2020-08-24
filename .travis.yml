@@ -16,7 +16,6 @@ script: npm run generate
 
 after_script:
   - docker build -t gql:latest .
-  - echo "DATABASE_URL=${DATABASE_URL}" > .nexus/build/.env
   - pip install awscli
   - export PATH=$PATH:$HOME/.local/bin
   - export AWS_ACCOUNT_ID="$(aws sts get-caller-identity --output text --query 'Account')"

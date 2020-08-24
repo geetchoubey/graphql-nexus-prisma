@@ -10,4 +10,6 @@ RUN npm install
 
 RUN npm run build:ci
 
+RUN echo "DATABASE_URL=${DATABASE_URL} > .nexus/build/api/.env
+
 CMD node .nexus/build/api/
