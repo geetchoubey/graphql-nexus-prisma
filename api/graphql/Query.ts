@@ -1,55 +1,50 @@
-import {schema} from 'nexus';
-import {stringArg} from '@nexus/schema'
-import User from './User'
-import Post from './Post';
-import Comment from './Comment';
+import { queryType } from '@nexus/schema'
 
-import Commons from '../common';
-
-export default schema.extendType({
-    type: "Query",
+export const Query = queryType({
     definition(t) {
-        t.field("user", {
-            type: User,
-            args: {
-                where: stringArg({required: true}),
-            },
-        })
-        t.list.field("users", {
-            type: User,
-            args: {
-                where: stringArg(),
-            },
-            async resolve(parent, {where}, {db}, info) {
-                return Commons(db).userFindMany(where);
-            }
-        })
-        t.field("post", {
-            type: Post,
-            args: {
-                where: stringArg({required: true}),
-            },
-            async resolve(parent, args, {db}, info) {
-                return Commons(db).postFindOne(args.where)
-            }
-        })
-        t.list.field("posts", {
-            type: Post,
-            args: {
-                where: stringArg(),
-            },
-            async resolve(parent, args, {db}, info) {
-                return Commons(db).postFindMany(args.where)
-            }
-        })
-        t.list.field("comments", {
-            type: Comment,
-            args: {
-                postId: stringArg({ required: true }),
-            },
-            async resolve(parent, {postId}, {db}) {
-                return Commons(db).getCommentsForPost(postId)
-            }
-        })
-    }
+        t.crud.users({ filtering: true})
+        t.crud.posts({ ordering: true, filtering: true })
+
+        //
+        // Examples showing custom resolvers
+        //
+
+        // t.field('blog', {
+        //     type: 'Blog',
+        //     args: {
+        //         id: intArg({ required: true }),
+        //     },
+        //     resolve(_root, args, ctx) {
+        //         return ctx.prisma.blog
+        //             .findOne({
+        //                 where: {
+        //                     id: args.id,
+        //                 },
+        //             })
+        //             .then((result) => {
+        //                 if (result === null) {
+        //                     throw new Error(`No blog with id of "${args.id}"`)
+        //                 }
+        //                 return result
+        //             })
+        //     },
+        // })
+
+        // t.field('blogsLike', {
+        //     type: 'Blog',
+        //     list: true,
+        //     args: {
+        //         name: stringArg(),
+        //         viewCount: intArg(),
+        //     },
+        //     resolve(_root, args, ctx) {
+        //         return ctx.prisma.blog.findMany({
+        //             where: {
+        //                 name: args.name ?? undefined,
+        //                 viewCount: args.viewCount ?? undefined,
+        //             },
+        //         })
+        //     },
+        // })
+    },
 })

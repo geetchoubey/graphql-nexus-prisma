@@ -1,6 +1,36 @@
-export * from './User'
-export * from './Comment'
-export * from './Input'
-export * from './Mutation'
-export * from './Post'
-export * from './Query'
+import * as NexusSchema from '@nexus/schema'
+import { nexusSchemaPrisma } from 'nexus-plugin-prisma/schema'
+import * as path from 'path'
+import * as Mutation from './Mutation'
+import * as Post from './Post'
+import * as Query from './Query'
+import * as User from './User'
+import * as Comment from './Comment'
+
+export default NexusSchema.makeSchema({
+    types: [Query, Mutation, Post, User, Comment],
+    plugins: [
+        nexusSchemaPrisma({
+            experimentalCRUD: true,
+        }),
+    ],
+    outputs: {
+        typegen: path.join(
+            __dirname,
+            '../../node_modules/@types/nexus-typegen/index.d.ts',
+        ),
+    },
+    typegenAutoConfig: {
+        contextType: 'Context.Context',
+        sources: [
+            {
+                source: '.prisma/client',
+                alias: 'prisma',
+            },
+            {
+                source: require.resolve('../context'),
+                alias: 'Context',
+            },
+        ],
+    },
+})

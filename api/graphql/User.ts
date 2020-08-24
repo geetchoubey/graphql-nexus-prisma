@@ -1,21 +1,12 @@
-import {schema} from 'nexus'
-import Post from './Post';
-import Commons from '../common';
+import { objectType } from '@nexus/schema'
 
-export default schema.objectType({
-    name: "User",
+export const User = objectType({
+    name: 'User',
     definition(t) {
-        t.id("id")
-        t.string("name")
-        t.string("email")
-        t.string("password")
-        t.list.field("posts", {
-            type: Post,
-            resolve(user, args, {db}, info) {
-                return Commons(db).getPostsByUser(user.id)
-            }
-        })
-        t.date("createdAt")
-        t.date("updatedAt")
-    }
+        t.model.id()
+        t.model.name()
+        t.model.email()
+        t.model.password()
+        t.model.posts()
+    },
 })

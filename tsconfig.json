@@ -7,6 +7,7 @@
     ],
     "strict": true,
     "rootDir": "api",
+    "outDir": "dist",
     "noEmit": true,
     "plugins": [
       {
