@@ -9,3 +9,4 @@ failed-inferMigrationSteps*
 
 .nexus/
 .idea/
+dist/

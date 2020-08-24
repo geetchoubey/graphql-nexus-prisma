@@ -9,8 +9,8 @@ const server = new GraphQLServer({
 })
 
 server.start({
-    port: 443,
+    port: process.env.port || 4000,
     endpoint: '/graphql',
     playground: '/playground',
     subscriptions: '/subscriptions'
-}, () => console.log(`🚀 Server ready at http://localhost:4000`))
+}, () => console.log(`🚀 Server ready at http://localhost:${process.env.port}`))
