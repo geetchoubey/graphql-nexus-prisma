@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "dependencies": {
     "@nexus/schema": "^0.15.0",
+    "dotenv": "^8.2.0",
     "nexus": "^0.26.1",
     "nexus-plugin-prisma": "^0.17.0"
   },
@@ -11,6 +12,7 @@
     "format": "npx prettier --write './**/*.{ts,md}'",
     "dev": "nexus dev",
     "build": "nexus build",
+    "build:ci": "npx prisma migrate save --experimental && npx prisma migrate up --experimental && npx prisma generate && npm run build",
     "start": "node .nexus/build/api"
   },
   "prettier": {

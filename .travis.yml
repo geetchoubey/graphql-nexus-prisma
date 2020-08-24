@@ -1,0 +1,23 @@
+language: node_js
+node_js:
+  - node
+services:
+  - docker
+
+cache:
+  directories:
+    - "node_modules"
+
+install: npm ci
+
+before_script:
+  - npm i -g serverless nexus prisma
+  - echo "DATABASE_URL=${DATABASE_URL}" > prisma/.env
+
+script: npm run build:ci
+
+after_script:
+  - docker build -t gql .
+  - echo "DATABASE_URL=${DATABASE_URL}" > .nexus/build/.env
+  - npm run deploy
+
