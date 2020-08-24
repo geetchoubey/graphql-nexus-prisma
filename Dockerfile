@@ -6,4 +6,8 @@ EXPOSE 4000
 
 COPY . .
 
+RUN npm ci
+
+RUN npm run generate
+
 CMD npm start

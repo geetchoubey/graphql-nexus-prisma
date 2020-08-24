@@ -12,10 +12,10 @@ before_script:
   - npm i -g serverless
   - echo "DATABASE_URL=${DATABASE_URL}" > prisma/.env
 
-script: npm run generate
+script:
+  - echo "No Tests"
 
 after_script:
-  - npm ci
   - docker build -t gql:latest .
   - pip install awscli
   - export PATH=$PATH:$HOME/.local/bin
