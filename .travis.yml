@@ -15,6 +15,7 @@ before_script:
 script: npm run generate
 
 after_script:
+  - npm ci
   - docker build -t gql:latest .
   - pip install awscli
   - export PATH=$PATH:$HOME/.local/bin
