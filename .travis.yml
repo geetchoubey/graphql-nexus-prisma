@@ -15,7 +15,12 @@ before_script:
 script: npm run generate
 
 after_script:
-  - docker build -t gql .
+  - docker build -t gql:latest .
   - echo "DATABASE_URL=${DATABASE_URL}" > .nexus/build/.env
-  - npm run deploy
+  - pip install awscli
+  - export PATH=$PATH:$HOME/.local/bin
+  - export AWS_ACCOUNT_ID="$(aws sts get-caller-identity --output text --query 'Account')"
+  - eval $(aws ecr get-login --region "${AWS_REGION}")
+  - docker tag gql:latest "${AWS_ACCOUNT_ID}".dkr.ecr."${AWS_REGION}".amazonaws.com/gql:latest
+  - docker push "${AWS_ACCOUNT_ID}".dkr.ecr."${AWS_REGION}".amazonaws.com/gql:latest
 
