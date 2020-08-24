@@ -16,11 +16,11 @@ script:
   - echo "No Tests"
 
 after_script:
-  - docker build -t gql:latest .
+  - docker build -t gql:"${TRAVIS_BUILD_NUMBER}" .
   - pip install awscli
   - export PATH=$PATH:$HOME/.local/bin
   - export AWS_ACCOUNT_ID="$(aws sts get-caller-identity --output text --query 'Account')"
   - eval "$(aws ecr get-login --region ap-south-1 --no-include-email)"
-  - docker tag gql:latest "${AWS_ACCOUNT_ID}".dkr.ecr."${AWS_REGION}".amazonaws.com/gql:latest
-  - docker push "${AWS_ACCOUNT_ID}".dkr.ecr."${AWS_REGION}".amazonaws.com/gql:latest
+  - docker tag gql:"${TRAVIS_BUILD_NUMBER}" "${AWS_ACCOUNT_ID}".dkr.ecr."${AWS_REGION}".amazonaws.com/gql:"${TRAVIS_BUILD_NUMBER}"
+  - docker push "${AWS_ACCOUNT_ID}".dkr.ecr."${AWS_REGION}".amazonaws.com/gql:"${TRAVIS_BUILD_NUMBER}"
 
