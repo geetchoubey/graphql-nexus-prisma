@@ -4,12 +4,12 @@ LABEL maintainer="Geet Chouey <geetchoubey@gmail.com>"
 
 EXPOSE 4000
 
+COPY package*.json .
+
+RUN npm ci
+
 COPY . .
 
-RUN cd $(npm root -g)/npm \
- && npm i fs-extra \
- && npm install
-
-RUN npm run generate
+RUN npm run build
 
 CMD npm start

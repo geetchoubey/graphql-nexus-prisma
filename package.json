@@ -12,7 +12,8 @@
     "clean": "rm -rf dist",
     "format": "npx prettier --write './**/*.{ts,md}'",
     "generate": "npx prisma migrate save --experimental && npx prisma migrate up --experimental && npx prisma generate",
-    "start": "ts-node api/app.ts"
+    "build": "tsc",
+    "start": "node dist/app.js"
   },
   "prettier": {
     "semi": false,
