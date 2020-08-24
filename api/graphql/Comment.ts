@@ -9,8 +9,6 @@ export default objectType({
     definition(t) {
         t.id("id")
         t.string("text")
-        t.date("createdAt")
-        t.date("updatedAt")
         t.field("post", {
             type: Post,
             resolve(parent, args, {db}, info) {

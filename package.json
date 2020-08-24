@@ -4,17 +4,15 @@
   "version": "0.0.0",
   "dependencies": {
     "@nexus/schema": "^0.15.0",
-    "dotenv": "^8.2.0",
-    "nexus": "^0.26.1",
+    "@types/ws": "^7.2.6",
+    "graphql-yoga": "^1.18.3",
     "nexus-plugin-prisma": "^0.17.0"
   },
   "scripts": {
+    "clean": "rm -rf dist",
     "format": "npx prettier --write './**/*.{ts,md}'",
-    "dev": "nexus dev",
-    "build": "nexus build",
-    "generate":"npx prisma migrate save --experimental && npx prisma migrate up --experimental && npx prisma generate",
-    "build:ci": "npm run build",
-    "start": "node .nexus/build/api"
+    "generate": "npx prisma migrate save --experimental && npx prisma migrate up --experimental && npx prisma generate",
+    "start": "ts-node api/app.ts"
   },
   "prettier": {
     "semi": false,
@@ -22,6 +20,9 @@
     "trailingComma": "all"
   },
   "devDependencies": {
-    "prettier": "^2.0.5"
+    "prettier": "^2.0.5",
+    "ts-node": "^9.0.0",
+    "ts-node-dev": "^1.0.0-pre.60",
+    "typescript": "^4.0.2"
   }
 }

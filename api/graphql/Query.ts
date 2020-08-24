@@ -1,19 +1,20 @@
-import {schema} from 'nexus';
-import {stringArg} from '@nexus/schema'
+import {stringArg, queryType} from '@nexus/schema'
 import User from './User'
 import Post from './Post';
 import Comment from './Comment';
 
 import Commons from '../common';
 
-export default schema.extendType({
-    type: "Query",
+export default queryType({
     definition(t) {
         t.field("user", {
             type: User,
             args: {
                 where: stringArg({required: true}),
             },
+            resolve(parent, args, {db}, info) {
+                return Commons(db).userFindMany(args.where);
+            }
         })
         t.list.field("users", {
             type: User,

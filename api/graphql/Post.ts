@@ -1,9 +1,9 @@
-import {schema} from 'nexus'
+import {objectType} from '@nexus/schema';
 import User from './User'
 import Comment from './Comment'
 import Commons from '../common';
 
-export default schema.objectType({
+export default objectType({
     name: "Post",
     definition(t) {
         t.id("id")
@@ -23,7 +23,5 @@ export default schema.objectType({
                 return Commons(db).getCommentsForPost(post.id)
             }
         })
-        t.date("createdAt")
-        t.date("updatedAt")
     }
 })

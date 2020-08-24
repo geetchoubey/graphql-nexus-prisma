@@ -1,14 +1,11 @@
-import {schema} from 'nexus'
-import {stringArg, arg} from '@nexus/schema';
+import {stringArg, arg, mutationType} from '@nexus/schema';
 import User from './User';
 import Post from './Post';
 import Comment from './Comment';
 import {CreateCommentInput, CreatePostInput, CreateUserInput} from './Input';
-
 import Commons from '../common';
 
-export default schema.extendType({
-    type: "Mutation",
+export default mutationType({
     definition(t) {
         t.field("createUser", {
             type: User,

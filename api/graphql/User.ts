@@ -1,8 +1,9 @@
-import {schema} from 'nexus'
+import {objectType} from '@nexus/schema';
+
 import Post from './Post';
 import Commons from '../common';
 
-export default schema.objectType({
+export default objectType({
     name: "User",
     definition(t) {
         t.id("id")
@@ -15,7 +16,5 @@ export default schema.objectType({
                 return Commons(db).getPostsByUser(user.id)
             }
         })
-        t.date("createdAt")
-        t.date("updatedAt")
     }
 })
