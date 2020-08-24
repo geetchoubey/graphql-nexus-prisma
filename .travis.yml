@@ -8,8 +8,10 @@ cache:
   directories:
     - "node_modules"
 
-before_script:
+install:
   - npm i -g serverless
+
+before_script:
   - echo "DATABASE_URL=${DATABASE_URL}" > prisma/.env
 
 script:
