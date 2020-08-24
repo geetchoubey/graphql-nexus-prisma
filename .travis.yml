@@ -8,8 +8,6 @@ cache:
   directories:
     - "node_modules"
 
-install: npm ci
-
 before_script:
   - npm i -g serverless nexus prisma
   - echo "DATABASE_URL=${DATABASE_URL}" > prisma/.env
