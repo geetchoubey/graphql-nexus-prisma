@@ -11,7 +11,8 @@
   "scripts": {
     "clean": "rm -rf dist",
     "format": "npx prettier --write './**/*.{ts,md}'",
-    "generate": "npx prisma migrate save --experimental && npx prisma migrate up --experimental && npx prisma generate",
+    "migrate": "npx prisma migrate save --experimental && npx prisma migrate up --experimental",
+    "generate": "npx prisma generate",
     "build": "tsc",
     "start": "node dist/app.js"
   },
