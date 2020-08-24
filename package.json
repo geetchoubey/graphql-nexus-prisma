@@ -12,7 +12,8 @@
     "format": "npx prettier --write './**/*.{ts,md}'",
     "dev": "nexus dev",
     "build": "nexus build",
-    "build:ci": "npx prisma migrate save --experimental && npx prisma migrate up --experimental && npx prisma generate && npm run build",
+    "generate":"npx prisma migrate save --experimental && npx prisma migrate up --experimental && npx prisma generate",
+    "build:ci": "npm run build",
     "start": "node .nexus/build/api"
   },
   "prettier": {
