@@ -7,6 +7,5 @@ lerna-debug.log*
 # Prisma
 failed-inferMigrationSteps*
 
-prisma/migrations/**
 .nexus/
 .idea/
