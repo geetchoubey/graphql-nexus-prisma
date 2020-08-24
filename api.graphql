@@ -14,8 +14,6 @@ type Comment {
 }
 
 input CreateCommentInput {
-  authorId: ID!
-  postId: ID!
   text: String!
 }
 
@@ -44,7 +42,7 @@ The `JSON` scalar type represents JSON objects as specified by [ECMA-404](http:/
 scalar Json
 
 type Mutation {
-  createComment(data: CreateCommentInput!): Comment
+  createComment(authorId: String!, data: CreateCommentInput!, postId: String!): Comment
   createPost(authorId: String!, data: CreatePostInput!): Post
   createUser(data: CreateUserInput!): User
 }
@@ -62,10 +60,11 @@ type Post {
 }
 
 type Query {
+  comments(postId: String!): [Comment!]
   post(where: String!): Post
   posts(where: String): [Post!]
   user(where: String!): User
-  users(where: [String]): [User!]
+  users(where: String): [User!]
 }
 
 type User {

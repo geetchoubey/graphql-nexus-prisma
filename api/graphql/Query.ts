@@ -1,6 +1,10 @@
 import {schema} from 'nexus';
+import {stringArg} from '@nexus/schema'
 import User from './User'
 import Post from './Post';
+import Comment from './Comment';
+
+import Commons from '../common';
 
 export default schema.extendType({
     type: "Query",
@@ -8,38 +12,43 @@ export default schema.extendType({
         t.field("user", {
             type: User,
             args: {
-                where: schema.stringArg({ required: true }),
+                where: stringArg({required: true}),
             },
         })
         t.list.field("users", {
             type: User,
             args: {
-                where: schema.stringArg({ list: [false] }),
+                where: stringArg(),
             },
-            async resolve(parent, args, {db}, info) {
-                return db.user.findMany();
+            async resolve(parent, {where}, {db}, info) {
+                return Commons(db).userFindMany(where);
             }
         })
         t.field("post", {
             type: Post,
             args: {
-                where: schema.stringArg({ required: true }),
+                where: stringArg({required: true}),
             },
-            async resolve(parent, args, ctx, info) {
-                return ctx.db.post.findOne({
-                    where: {
-                        id: args.where
-                    }
-                })
+            async resolve(parent, args, {db}, info) {
+                return Commons(db).postFindOne(args.where)
             }
         })
         t.list.field("posts", {
             type: Post,
             args: {
-                where: schema.stringArg(),
+                where: stringArg(),
             },
-            async resolve(parent, args, ctx, info) {
-                return ctx.db.post.findMany()
+            async resolve(parent, args, {db}, info) {
+                return Commons(db).postFindMany(args.where)
+            }
+        })
+        t.list.field("comments", {
+            type: Comment,
+            args: {
+                postId: stringArg({ required: true }),
+            },
+            async resolve(parent, {postId}, {db}) {
+                return Commons(db).getCommentsForPost(postId)
             }
         })
     }

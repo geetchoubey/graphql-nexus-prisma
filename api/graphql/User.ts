@@ -1,5 +1,6 @@
 import {schema} from 'nexus'
 import Post from './Post';
+import Commons from '../common';
 
 export default schema.objectType({
     name: "User",
@@ -10,12 +11,8 @@ export default schema.objectType({
         t.string("password")
         t.list.field("posts", {
             type: Post,
-            async resolve(user, args, ctx, info) {
-                return ctx.db.post.findMany({
-                    where: {
-                        authorId: user.id
-                    }
-                })
+            resolve(user, args, {db}, info) {
+                return Commons(db).getPostsByUser(user.id)
             }
         })
         t.date("createdAt")

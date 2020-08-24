@@ -1,6 +1,7 @@
 import {schema} from 'nexus'
 import User from './User'
 import Comment from './Comment'
+import Commons from '../common';
 
 export default schema.objectType({
     name: "Post",
@@ -11,23 +12,15 @@ export default schema.objectType({
         t.boolean("published")
         t.field("author", {
             type: User,
-            async resolve(post, args, ctx, info) {
-                return ctx.db.user.findOne({
-                    where: {
-                        id: post.authorId
-                    }
-                })
+            resolve(post, args, {db}, info) {
+                return Commons(db).userFindOne(post.authorId)
             }
         })
         t.id("authorId")
         t.list.field("comments", {
             type: Comment,
-            async resolve(post, args, ctx, info) {
-                return ctx.db.comment.findMany({
-                    where: {
-                        postId: post.id
-                    }
-                })
+            resolve(post, args, {db}, info) {
+                return Commons(db).getCommentsForPost(post.id)
             }
         })
         t.date("createdAt")
